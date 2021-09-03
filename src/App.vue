@@ -5,6 +5,7 @@
       :allowSorting="true"
       :allowFiltering="true"
       :allowGrouping="true"
+      :groupSettings="groupSettings"
     >
       <e-columns>
         <e-column
@@ -16,6 +17,16 @@
           field="NumberofPatentFamilies"
           headerText="No of Patent Families"
           width="120"
+        ></e-column>
+        <e-column
+          field="createTime"
+          headerText="Create Time"
+          type="string"
+          width="200"
+          :enableGroupByFormat="true"
+          :formatter="{
+            getValue: (column, data) => data.createTime.slice(0, 10)
+          }"
         ></e-column>
         <e-column
           field="Country"
@@ -39,12 +50,7 @@
 </template>
 <script>
 import Vue from "vue";
-import {
-  GridPlugin,
-  Sort,
-  Filter,
-  Group,
-} from "@syncfusion/ej2-vue-grids";
+import { GridPlugin, Sort, Filter, Group } from "@syncfusion/ej2-vue-grids";
 
 Vue.use(GridPlugin);
 
@@ -112,12 +118,42 @@ export default {
           Country: "Japan",
           "Number of INPADOC patents": 4126,
           Active: "1991-2016",
-          createTime: "2021-08-10 12:30:42",
+          createTime: "2021-08-10 14:30:42",
           Mainfieldsofinvention:
             "Thin film transistors, Liquid crystal displays, OLED",
         },
       ],
+      groupSettings: {
+        // captionTemplate: function () {
+        //   return {
+        //     template: Vue.component("columnTemplate", {
+        //       template: "<div>{{captionValue}}</div>",
+        //       data: function () {
+        //         return {
+        //           data: {},
+        //         };
+        //       },
+        //       computed: {
+        //         // Returned value will be bound to the group cation
+        //         captionValue: function (value) {
+        //           if (value.data.field === "createTime") {
+        //             return value.data.key.slice(0, 10)
+        //           } else {
+        //             // For the remaining columns, the key value is directly returned
+        //             return value.data.key;
+        //           }
+        //         },
+        //       },
+        //     }),
+        //   };
+        // },
+      },
     };
+  },
+  methods: {
+    formatFuc(column, data) {
+      return data.createTime.slice(0, 10);
+    },
   },
   provide: {
     grid: [Sort, Filter, Group],
