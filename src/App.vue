@@ -124,29 +124,29 @@ export default {
         },
       ],
       groupSettings: {
-        // captionTemplate: function () {
-        //   return {
-        //     template: Vue.component("columnTemplate", {
-        //       template: "<div>{{captionValue}}</div>",
-        //       data: function () {
-        //         return {
-        //           data: {},
-        //         };
-        //       },
-        //       computed: {
-        //         // Returned value will be bound to the group cation
-        //         captionValue: function (value) {
-        //           if (value.data.field === "createTime") {
-        //             return value.data.key.slice(0, 10)
-        //           } else {
-        //             // For the remaining columns, the key value is directly returned
-        //             return value.data.key;
-        //           }
-        //         },
-        //       },
-        //     }),
-        //   };
-        // },
+        captionTemplate: function () {
+          return {
+            template: Vue.component("columnTemplate", {
+              template: "<div>{{captionValue}}</div>",
+              data: function () {
+                return {
+                  data: {},
+                };
+              },
+              computed: {
+                // Returned value will be bound to the group cation
+                captionValue: function (value) {
+                  if (value.data.field === "createTime") {
+                    return `${value.data.headerText}：${value.data.key.slice(0, 10)} - ${value.data.count} items`
+                  } else {
+                    // For the remaining columns, the key value is directly returned
+                    return `${value.data.headerText}：${value.data.key} - ${value.data.count} items`;
+                  }
+                },
+              },
+            }),
+          };
+        },
       },
     };
   },
